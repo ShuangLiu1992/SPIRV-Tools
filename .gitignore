@@ -34,3 +34,4 @@ bazel-testlogs
 
 # VSCode
 /.vscode/*
+/CMakeUserPresets.json
