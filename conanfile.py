@@ -10,19 +10,22 @@ class SPIRVTOOLSConan(ConanFile):
 
     generators = "CMakeDeps"
 
+    def export_sources(self):
+        conan.tools.files.copy(self, "*", self.recipe_folder, self.export_sources_folder)
+        conan.tools.files.copy(self, "*",  os.path.join(self.recipe_folder, "..", "SPIRV-Headers"), os.path.join(self.export_sources_folder, "external", "SPIRV-Headers"))
+
     def generate(self):
         tc = CMakeToolchain(self)
         tc.presets_prefix = f"{self.settings.os}_{self.settings.build_type}_{self.settings.arch}"
         tc.variables["SPIRV_WERROR"] = False
         tc.variables["SPIRV_SKIP_EXECUTABLES"] = True
         tc.variables["SPIRV_SKIP_TESTS"] = True
-        tc.variables['SPIRV-Headers_SOURCE_DIR'] = os.path.join(self.recipe_folder, "..", "SPIRV-Headers")
         tc.generate()
 
     def layout(self):
         cmake_layout(self)
 
-    def package(self):
+    def build(self):
         cmake = CMake(self)
         cmake.configure()
         cmake.build()
