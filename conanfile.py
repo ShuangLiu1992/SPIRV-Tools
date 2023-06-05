@@ -12,7 +12,7 @@ class SPIRVTOOLSConan(ConanFile):
 
     def export_sources(self):
         conan.tools.files.copy(self, "*", self.recipe_folder, self.export_sources_folder)
-        conan.tools.files.copy(self, "*",  os.path.join(self.recipe_folder, "..", "SPIRV-Headers"), os.path.join(self.export_sources_folder, "external", "SPIRV-Headers"))
+        conan.tools.files.copy(self, "*",  os.path.join(self.recipe_folder, "..", "SPIRV-Headers"), os.path.join(self.export_sources_folder, "external", "spirv-headers"))
 
     def generate(self):
         tc = CMakeToolchain(self)
